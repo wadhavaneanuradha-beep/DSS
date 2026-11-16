@@ -1,0 +1,78 @@
+
+customer_id = [50, 60, 40, 20, 80, 90, 100, 10]
+
+
+# Linear Search Function
+def linear(id, target):
+    for i in range(len(id)):
+        if id[i] == target:
+            return i
+    return -1
+
+
+# Binary Search Function
+def binary(id, target):
+    low = 0
+    high = len(id) - 1
+
+    while low <= high:
+        mid = (low + high) // 2
+
+        if id[mid] == target:
+            return mid
+        elif id[mid] < target:
+            low = mid + 1
+        else:
+            high = mid - 1
+
+    return -1
+
+
+# Menu Function
+def menu():
+    print("\n***** Searching Techniques *****")
+    print("1. Linear Search")
+    print("2. Binary Search")
+    print("3. Exit")
+
+
+# Main Program
+while True:
+    menu()
+
+    ch = input("Enter your choice: ")
+
+    if ch == '1':
+        print("Customer IDs:", customer_id)
+
+        search_id = int(input("Enter customer ID to be searched: "))
+
+        index_linear = linear(customer_id, search_id)
+
+        if index_linear != -1:
+            print("Customer ID found at location:", index_linear)
+        else:
+            print("Customer ID not found")
+
+    elif ch == '2':
+        print("Unsorted list:", customer_id)
+
+        sorted_id = sorted(customer_id)
+
+        print("Sorted list:", sorted_id)
+
+        search_id = int(input("Enter customer ID to be searched: "))
+
+        index_binary = binary(sorted_id, search_id)
+
+        if index_binary != -1:
+            print("Customer ID found at location:", index_binary)
+        else:
+            print("Customer ID not found")
+
+    elif ch == '3':
+        print("Exiting program...")
+        break
+
+    else:
+        print("Invalid choice! Please enter 1, 2 or 3.")
