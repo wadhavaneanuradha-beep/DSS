@@ -1,0 +1,84 @@
+
+salaries = [46897.50, 73589.39, 82456.98, 24900.87,
+            97235.84, 26755.89, 55823.13]
+
+
+# Bubble Sort
+def bubble_sort(arr):
+    n = len(arr)
+    sorted_arr = arr.copy()
+
+    for i in range(n):
+        for j in range(0, n - i - 1):
+            if sorted_arr[j] > sorted_arr[j + 1]:
+                sorted_arr[j], sorted_arr[j + 1] = sorted_arr[j + 1], sorted_arr[j]
+
+    return sorted_arr
+
+
+# Selection Sort
+def selection_sort(arr):
+    n = len(arr)
+    sorted_arr = arr.copy()
+
+    for i in range(n):
+        min_index = i
+
+        for j in range(i + 1, n):
+            if sorted_arr[j] < sorted_arr[min_index]:
+                min_index = j
+
+        sorted_arr[i], sorted_arr[min_index] = sorted_arr[min_index], sorted_arr[i]
+
+    return sorted_arr
+
+
+# Python Built-in Sort
+def python_sort(arr):
+    return sorted(arr)
+
+
+# Display Top 5 Salaries
+def display_top_5(sorted_arr):
+    top_5 = sorted_arr[-5:]
+    top_5.reverse()
+
+    print("Top 5 Salaries:")
+    for salary in top_5:
+        print(salary)
+
+
+# Menu Function
+def menu():
+    print("\n***** Sorting Techniques *****")
+    print("1. Bubble Sort")
+    print("2. Selection Sort")
+    print("3. Top 5 Salary")
+    print("4. Exit")
+    print("Salaries:", salaries)
+
+
+# Main Program
+while True:
+    menu()
+
+    ch = input("Enter your choice: ")
+
+    if ch == '1':
+        bub_sort = bubble_sort(salaries)
+        print("Sorted Salaries:", bub_sort)
+
+    elif ch == '2':
+        sel_sort = selection_sort(salaries)
+        print("Sorted Salaries:", sel_sort)
+
+    elif ch == '3':
+        py_sort = python_sort(salaries)
+        display_top_5(py_sort)
+
+    elif ch == '4':
+        print("Exiting Program...")
+        break
+
+    else:
+        print("Invalid choice! Please enter 1, 2, 3 or 4.")
