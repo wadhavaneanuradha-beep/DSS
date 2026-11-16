@@ -1,0 +1,42 @@
+import heapq
+
+start = [1, 2, 3, 4, 0, 6, 7, 5, 8]
+goal = [1, 2, 3, 4, 5, 6, 7, 8, 0]
+
+def h(s):
+    return sum(s[i] != goal[i] and s[i] != 0 for i in range(9))
+
+pq = [(0, start, [])]
+visited = set()
+
+while pq:
+    f, s, path = heapq.heappop(pq)
+
+    if s == goal:
+        print("Solution found!")
+        for x in path + [s]:
+            print(x[:3])
+            print(x[3:6])
+            print(x[6:])
+            print()
+        break
+
+    if tuple(s) in visited:
+        continue
+
+    visited.add(tuple(s))
+    p = s.index(0)
+
+    for m in [-3, 3, -1, 1]:
+        n = p + m
+
+        if 0 <= n < 9:
+            if (m == -1 and p % 3 == 0) or (m == 1 and p % 3 == 2):
+                continue
+
+            new = s.copy()
+            new[p], new[n] = new[n], new[p]
+
+            if tuple(new) not in visited:
+                g = len(path) + 1
+                heapq.heappush(pq, (g + h(new), new, path + [s]))
