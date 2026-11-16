@@ -1,0 +1,28 @@
+N = 8
+board = [-1] * N
+
+def solve(row):
+    if row == N:
+        return True
+
+    for col in range(N):
+        safe = True
+
+        for i in range(row):
+            if board[i] == col or abs(board[i]-col) == abs(i-row):
+                safe = False
+
+        if safe:
+            board[row] = col
+
+            if solve(row + 1):
+                return True
+
+            board[row] = -1
+
+    return False
+
+solve(0)
+
+for row in board:
+    print("." * row + "Q" + "." * (N-row-1))
