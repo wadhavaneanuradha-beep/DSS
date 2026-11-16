@@ -1,0 +1,31 @@
+import re
+
+while True:
+    msg = input("You: ").lower()
+
+    if re.search("hello|hi|hey", msg):
+        reply = "Hello! How can I help?"
+
+    elif re.search("how are you", msg):
+        reply = "I am fine!"
+
+    elif re.search("your name|who are you", msg):
+        reply = "I am a chatbot."
+
+    elif re.search("good morning", msg):
+        reply = "Good morning!"
+
+    elif re.search("thank|thanks", msg):
+        reply = "Welcome!"
+
+    elif re.search("help", msg):
+        reply = "How can I help you?"
+
+    elif re.search("bye|exit|quit", msg):
+        print("Bot: Goodbye!")
+        break
+
+    else:
+        reply = "Sorry, I don't understand."
+
+    print("Bot:", reply)
