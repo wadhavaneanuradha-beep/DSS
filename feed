@@ -1,0 +1,29 @@
+import random
+
+low = 1
+high = 100
+
+secret = random.randint(low, high)
+
+attempts = 0
+
+while low <= high:
+
+    guess = (low + high) // 2
+
+    attempts += 1
+
+    print("Agent guessed:", guess)
+
+    if guess == secret:
+        print("Correct!")
+        print("Number found in", attempts, "attempts")
+        break
+
+    elif guess < secret:
+        print("Higher")
+        low = guess + 1
+
+    else:
+        print("Lower")
+        high = guess - 1
