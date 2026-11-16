@@ -1,0 +1,155 @@
+
+class Node:
+    def __init__(self, key):
+        self.key = key
+        self.left = None
+        self.right = None
+
+
+class BST:
+    def __init__(self):
+        self.root = None
+
+    # Insert a node
+    def insert(self, root, key):
+        if root is None:
+            return Node(key)
+
+        if key < root.key:
+            root.left = self.insert(root.left, key)
+        elif key > root.key:
+            root.right = self.insert(root.right, key)
+
+        return root
+
+    # Search for a node
+    def search(self, root, key):
+        if root is None or root.key == key:
+            return root
+
+        if key < root.key:
+            return self.search(root.left, key)
+        else:
+            return self.search(root.right, key)
+
+    # Delete a node
+    def delete(self, root, key):
+        if root is None:
+            return root
+
+        if key < root.key:
+            root.left = self.delete(root.left, key)
+
+        elif key > root.key:
+            root.right = self.delete(root.right, key)
+
+        else:
+            # Node has no left child
+            if root.left is None:
+                return root.right
+
+            # Node has no right child
+            elif root.right is None:
+                return root.left
+
+            # Node has two children
+            temp = self.min_value_node(root.right)
+            root.key = temp.key
+            root.right = self.delete(root.right, temp.key)
+
+        return root
+
+    # Find minimum value node
+    def min_value_node(self, node):
+        current = node
+
+        while current.left is not None:
+            current = current.left
+
+        return current
+
+    # In-order traversal
+    def inorder(self, root):
+        if root:
+            self.inorder(root.left)
+            print(root.key, end=" ")
+            self.inorder(root.right)
+
+    # Pre-order traversal
+    def preorder(self, root):
+        if root:
+            print(root.key, end=" ")
+            self.preorder(root.left)
+            self.preorder(root.right)
+
+    # Post-order traversal
+    def postorder(self, root):
+        if root:
+            self.postorder(root.left)
+            self.postorder(root.right)
+            print(root.key, end=" ")
+
+
+# Main program
+bst = BST()
+
+while True:
+    print("\n\n----- BST MENU -----")
+    print("1. Insert")
+    print("2. Search")
+    print("3. Delete")
+    print("4. In-order Traversal")
+    print("5. Pre-order Traversal")
+    print("6. Post-order Traversal")
+    print("7. Exit")
+
+    choice = input("Enter your choice: ")
+
+    if choice == "1":
+        keys = input("Enter keys separated by spaces: ").split()
+
+        for key in keys:
+            bst.root = bst.insert(bst.root, int(key))
+
+        print("Keys inserted successfully.")
+
+    elif choice == "2":
+        key = int(input("Enter key to search: "))
+
+        result = bst.search(bst.root, key)
+
+        if result:
+            print(f"Key {key} found in BST.")
+        else:
+            print(f"Key {key} not found in BST.")
+
+    elif choice == "3":
+        key = int(input("Enter key to delete: "))
+
+        if bst.search(bst.root, key):
+            bst.root = bst.delete(bst.root, key)
+            print(f"Key {key} deleted successfully.")
+        else:
+            print(f"Key {key} not found in BST.")
+
+    elif choice == "4":
+        print("In-order Traversal:")
+        bst.inorder(bst.root)
+        print()
+
+    elif choice == "5":
+        print("Pre-order Traversal:")
+        bst.preorder(bst.root)
+        print()
+
+    elif choice == "6":
+        print("Post-order Traversal:")
+        bst.postorder(bst.root)
+        print()
+
+    elif choice == "7":
+        print("Exiting BST program...")
+        break
+
+    else:
+        print("Invalid choice! Please enter 1 to 7.")
