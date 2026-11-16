@@ -1,0 +1,93 @@
+
+class LinearProb:
+    def __init__(self, size=10):
+        self.size = size
+        self.table = [None] * size
+        self.Del = "<DELETED>"
+
+    def _hash_function(self, key):
+        return key % self.size
+
+    def insert(self, key):
+        index = self._hash_function(key)
+        original_index = index
+
+        while self.table[index] not in (None, self.Del):
+            if self.table[index] == key:
+                print(f"Key {key} already exists at index {index}.")
+                return
+
+            index = (index + 1) % self.size
+
+            if index == original_index:
+                print("Hash table is full. Cannot insert.")
+                return
+
+        self.table[index] = key
+        print(f"Inserted key {key} at index {index}.")
+
+    def display(self):
+        print("Hash table:")
+        for i, key in enumerate(self.table):
+            print(f"Index {i}: {key}")
+
+    def search(self, key):
+        index = self._hash_function(key)
+        original_index = index
+
+        while self.table[index] is not None:
+            if self.table[index] == key:
+                print(f"Key {key} found at index {index}.")
+                return index
+
+            index = (index + 1) % self.size
+
+            if index == original_index:
+                break
+
+        print(f"Key {key} not found.")
+        return None
+
+    def delete(self, key):
+        index = self.search(key)
+
+        if index is not None:
+            self.table[index] = self.Del
+            print(f"Key {key} deleted from index {index}.")
+
+    def menu(self):
+        while True:
+            print("\n1. Insert")
+            print("2. Display")
+            print("3. Search")
+            print("4. Delete")
+            print("5. Exit")
+
+            ch = input("Enter your choice: ")
+
+            if ch == '1':
+                key = int(input("Enter the key: "))
+                self.insert(key)
+
+            elif ch == '2':
+                self.display()
+
+            elif ch == '3':
+                key = int(input("Enter the key to search: "))
+                self.search(key)
+
+            elif ch == '4':
+                key = int(input("Enter the key to delete: "))
+                self.delete(key)
+
+            elif ch == '5':
+                print("Exiting program...")
+                break
+
+            else:
+                print("Invalid choice. Please try again.")
+
+
+# Main program
+l = LinearProb()
+l.menu()
