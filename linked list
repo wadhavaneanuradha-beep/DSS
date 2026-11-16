@@ -1,0 +1,144 @@
+
+class Node:
+    def __init__(self, name, rollno, marks):
+        self.name = name
+        self.rollno = rollno
+        self.marks = marks
+        self.next = None
+
+
+class LinkedList:
+    def __init__(self):
+        self.head = None
+
+    # Insert a new node
+    def append(self, name, rollno, marks):
+        newnode = Node(name, rollno, marks)
+
+        if self.head is None:
+            self.head = newnode
+            return
+
+        last = self.head
+        while last.next:
+            last = last.next
+
+        last.next = newnode
+
+    # Display all records
+    def print_list(self):
+        current = self.head
+
+        if current is None:
+            print("Linked List is empty")
+            return
+
+        while current:
+            print("Name:", current.name)
+            print("Roll No:", current.rollno)
+            print("Marks:", current.marks)
+            print("----------------------")
+            current = current.next
+
+    # Delete a node
+    def delete_node(self, rollno):
+        current = self.head
+        prev = None
+
+        while current:
+            if current.rollno == rollno:
+                if prev:
+                    prev.next = current.next
+                else:
+                    self.head = current.next
+
+                print("Node deleted")
+                return
+
+            prev = current
+            current = current.next
+
+        print("Record not found")
+
+    # Update roll number
+    def update(self, rollno, new_roll):
+        current = self.head
+
+        while current:
+            if current.rollno == rollno:
+                current.rollno = new_roll
+                print("Record updated")
+                return
+
+            current = current.next
+
+        print("Record not found")
+
+    # Search a record
+    def search(self, rollno):
+        current = self.head
+
+        while current:
+            if current.rollno == rollno:
+                print("Record found")
+                print("Name:", current.name)
+                print("Roll No:", current.rollno)
+                print("Marks:", current.marks)
+                return
+
+            current = current.next
+
+        print("Record not found")
+
+    # Menu-driven program
+    def menu(self):
+        while True:
+            print("******** Linked List ********")
+            print("1. Append")
+            print("2. Display")
+            print("3. Delete")
+            print("4. Update")
+            print("5. Search")
+            print("6. Exit")
+
+            ch = input("Enter your choice: ")
+
+            if ch == '1':
+                name = input("Enter the name: ")
+                rollno = input("Enter the rollno: ")
+                marks = input("Enter the marks: ")
+
+                self.append(name, rollno, marks)
+                print("Data inserted")
+
+            elif ch == '2':
+                self.print_list()
+
+            elif ch == '3':
+                rollno = input("Enter rollno to delete data: ")
+                self.delete_node(rollno)
+
+                print("The remaining data is:")
+                self.print_list()
+
+            elif ch == '4':
+                rollno = input("Enter old roll no: ")
+                new_roll = input("Enter new rollno: ")
+
+                self.update(rollno, new_roll)
+
+            elif ch == '5':
+                rollno = input("Enter the rollno to search data: ")
+                self.search(rollno)
+
+            elif ch == '6':
+                print("Exiting program...")
+                break
+
+            else:
+                print("Invalid choice")
+
+
+# Main program
+L1 = LinkedList()
+L1.menu()
