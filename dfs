@@ -1,0 +1,46 @@
+x = int(input("Jug 1 Capacity: "))
+y = int(input("Jug 2 Capacity: "))
+g1 = int(input("Goal Jug 1: "))
+g2 = int(input("Goal Jug 2: "))
+
+visited = set()
+path = []
+
+def dfs(a,b):
+
+    if (a,b) in visited:
+        return False
+
+    visited.add((a,b))
+    path.append((a,b))
+
+    if a == g1 and b == g2:
+        return True
+
+    if dfs(x,b):
+        return True
+
+    if dfs(a,y):
+        return True
+
+    if dfs(0,b):
+        return True
+
+    if dfs(a,0):
+        return True
+
+    water = min(a,y-b)
+    if dfs(a-water,b+water):
+        return True
+
+    water = min(b,x-a)
+    if dfs(a+water,b-water):
+        return True
+
+    path.pop()
+    return False
+
+if dfs(0,0):
+    print("Solution:",path)
+else:
+    print("No Solution")
