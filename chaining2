@@ -1,0 +1,79 @@
+
+class HashTable:
+    def __init__(self, size=10):
+        self.size = size
+        self.table = [[] for _ in range(size)]
+
+    def hashfunction(self, key):
+        return key % self.size
+
+    def insert(self, key):
+        index = self.hashfunction(key)
+
+        if key not in self.table[index]:
+            self.table[index].append(key)
+            print(f"Key {key} inserted at index {index}")
+        else:
+            print(f"Key {key} already exists")
+
+    def delete(self, key):
+        index = self.hashfunction(key)
+
+        if key in self.table[index]:
+            self.table[index].remove(key)
+            print(f"Key {key} deleted successfully")
+            return True
+        else:
+            print(f"Key {key} not found")
+            return False
+
+    def search(self, key):
+        index = self.hashfunction(key)
+
+        if key in self.table[index]:
+            print(f"Key {key} found at index {index}")
+        else:
+            print(f"Key {key} not found")
+
+    def display(self):
+        print("\nHash Table")
+
+        for i, key in enumerate(self.table):
+            print(f"Index {i}: {key}")
+
+    def menu(self):
+        while True:
+            print("\n==== HASH MENU ====")
+            print("1. Insert")
+            print("2. Delete")
+            print("3. Search")
+            print("4. Display")
+            print("5. Exit")
+
+            ch = input("Enter your choice: ")
+
+            if ch == '1':
+                key = int(input("Enter the key: "))
+                self.insert(key)
+
+            elif ch == '2':
+                key = int(input("Enter key you want to delete: "))
+                self.delete(key)
+
+            elif ch == '3':
+                key = int(input("Enter key you want to search: "))
+                self.search(key)
+
+            elif ch == '4':
+                self.display()
+
+            elif ch == '5':
+                print("Exiting program...")
+                break
+
+            else:
+                print("Invalid choice!")
+
+
+ht = HashTable()
+ht.menu()
