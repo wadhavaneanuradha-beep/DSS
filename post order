@@ -1,0 +1,105 @@
+
+class Node:
+    def __init__(self, value):
+        self.value = value
+        self.left = None
+        self.right = None
+
+
+def is_operator(c):
+    return c in "+-*/"
+
+
+def construct_expression_tree(prefix):
+    stack = []
+
+    for char in reversed(prefix):
+        if not is_operator(char):
+            node = Node(char)
+        else:
+            node = Node(char)
+            node.left = stack.pop()
+            node.right = stack.pop()
+
+        stack.append(node)
+
+    return stack[-1] if stack else None
+
+
+def postorder_non_recursive(root):
+    if root is None:
+        print("Tree is empty.")
+        return
+
+    stack = []
+    result = []
+    last_visited = None
+    current = root
+
+    while stack or current:
+        if current:
+            stack.append(current)
+            current = current.left
+        else:
+            peek = stack[-1]
+
+            if peek.right and last_visited != peek.right:
+                current = peek.right
+            else:
+                result.append(peek.value)
+                last_visited = stack.pop()
+
+    print("Post-order traversal (non-recursive):", ' '.join(result))
+
+
+def delete_tree(root):
+    if root is None:
+        print("Tree is already empty.")
+        return None
+
+    stack = [root]
+
+    while stack:
+        node = stack.pop()
+
+        if node.right:
+            stack.append(node.right)
+
+        if node.left:
+            stack.append(node.left)
+
+        node.left = None
+        node.right = None
+
+    print("Tree deleted.")
+    return None
+
+
+root = None
+
+while True:
+    print("\n----- EXPRESSION TREE MENU -----")
+    print("1. Construct Expression Tree")
+    print("2. Post-order Traversal (Non-Recursive)")
+    print("3. Delete Expression Tree")
+    print("4. Exit")
+
+    choice = input("Enter your choice: ")
+
+    if choice == "1":
+        prefix_expr = input("Enter prefix expression: ")
+        root = construct_expression_tree(prefix_expr)
+        print("Expression tree constructed successfully.")
+
+    elif choice == "2":
+        postorder_non_recursive(root)
+
+    elif choice == "3":
+        root = delete_tree(root)
+
+    elif choice == "4":
+        print("Exiting program...")
+        break
+
+    else:
+        print("Invalid choice! Please enter 1 to 4.")
